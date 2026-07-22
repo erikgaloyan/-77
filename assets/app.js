@@ -77,10 +77,58 @@
     });
   }
 
+  function initGallery() {
+    var gallery = document.querySelector('[data-gallery]');
+    if (!gallery) return;
+    var sources = [].slice.call(gallery.querySelectorAll('[data-full]'))
+      .map(function (el) { return el.getAttribute('data-full'); });
+    if (!sources.length) return;
+
+    var overlay = document.createElement('div');
+    overlay.className = 'lightbox';
+    overlay.innerHTML =
+      '<button class="lightbox__close" aria-label="Закрыть"><i data-lucide="x"></i></button>' +
+      '<button class="lightbox__nav lightbox__nav--prev" aria-label="Назад"><i data-lucide="chevron-left"></i></button>' +
+      '<button class="lightbox__nav lightbox__nav--next" aria-label="Вперёд"><i data-lucide="chevron-right"></i></button>' +
+      '<img alt="Фото объекта">' +
+      '<div class="lightbox__count"></div>';
+    document.body.appendChild(overlay);
+
+    var imgEl = overlay.querySelector('img');
+    var countEl = overlay.querySelector('.lightbox__count');
+    var current = 0;
+
+    function show(i) {
+      current = (i + sources.length) % sources.length;
+      imgEl.src = sources[current];
+      countEl.textContent = (current + 1) + ' / ' + sources.length;
+    }
+    function open(i) { show(i); overlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
+    function close() { overlay.classList.remove('is-open'); document.body.style.overflow = ''; }
+
+    gallery.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-full]');
+      if (!btn) return;
+      open(sources.indexOf(btn.getAttribute('data-full')));
+    });
+    overlay.querySelector('.lightbox__close').addEventListener('click', close);
+    overlay.querySelector('.lightbox__nav--prev').addEventListener('click', function () { show(current - 1); });
+    overlay.querySelector('.lightbox__nav--next').addEventListener('click', function () { show(current + 1); });
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (!overlay.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') show(current - 1);
+      else if (e.key === 'ArrowRight') show(current + 1);
+    });
+    renderIcons(overlay);
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     renderIcons();
     initNavToggle();
     initSmoothAnchors();
     initQuoteForm();
+    initGallery();
   });
 })();
