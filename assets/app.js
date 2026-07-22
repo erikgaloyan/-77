@@ -9,13 +9,21 @@
   }
 
   function initNavToggle() {
+    var header = document.querySelector('.site-header');
     var toggle = document.querySelector('.nav-toggle');
-    var nav = document.querySelector('.main-nav');
-    if (!toggle || !nav) return;
-    toggle.addEventListener('click', function () {
-      var open = nav.classList.toggle('is-open');
+    if (!header || !toggle) return;
+    function setOpen(open) {
+      header.classList.toggle('is-open', open);
       toggle.setAttribute('aria-expanded', String(open));
+    }
+    toggle.addEventListener('click', function () {
+      setOpen(!header.classList.contains('is-open'));
     });
+    // close the menu after tapping any link/button inside it
+    header.querySelectorAll('.main-nav a, .header-actions a, .header-actions button')
+      .forEach(function (el) {
+        el.addEventListener('click', function () { setOpen(false); });
+      });
   }
 
   function initSmoothAnchors() {

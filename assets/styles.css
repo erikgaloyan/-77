@@ -646,17 +646,32 @@ img { max-width: 100%; display: block; }
   .map-ph { aspect-ratio: 16/10; }
 }
 @media (max-width: 720px) {
-  .nav-toggle { display: inline-flex; order: 3; margin-left: auto; }
-  .header-actions { margin-left: 0; }
-  .main-nav {
-    order: 4;
-    flex-basis: 100%;
-    margin-left: 0;
-    flex-direction: column;
-    gap: 2px;
+  .nav-toggle { display: inline-flex; order: 2; margin-left: auto; }
+  /* nav links + phone + call button all collapse into the dropdown */
+  .main-nav,
+  .header-actions {
     display: none;
+    order: 3;
+    flex-basis: 100%;
+    width: 100%;
+    margin-left: 0;
   }
-  .main-nav.is-open { display: flex; }
+  .site-header.is-open .main-nav,
+  .site-header.is-open .header-actions { display: flex; }
+  .main-nav { flex-direction: column; gap: 2px; }
+  .main-nav a { padding: 12px 14px; }
+  .header-actions {
+    order: 4;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    white-space: normal;
+    margin-top: 8px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .header-actions .header-phone { justify-content: center; font-size: 18px; }
+  .header-actions .btn { width: 100%; }
   .services-grid { grid-template-columns: 1fr 1fr; }
   .steps { grid-template-columns: 1fr; }
   .step { border-left: none !important; padding: 0; }
@@ -666,7 +681,6 @@ img { max-width: 100%; display: block; }
 @media (max-width: 520px) {
   .services-grid, .proj-grid, .info-grid, .adv { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
-  .header-phone span { display: none; }
   .cta-strip .btn, .hero__actions .btn { width: 100%; }
 }
 
