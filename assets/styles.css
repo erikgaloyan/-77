@@ -584,8 +584,24 @@ img { max-width: 100%; display: block; }
 .info-card__value { font-size: 16px; font-weight: 600; color: var(--text-strong); }
 
 .contact-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
+  display: grid; grid-template-columns: 1fr 1.05fr; gap: 48px; align-items: start;
 }
+.contact-info h2 { margin: 10px 0 16px; }
+.contact-list { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+.contact-row { display: flex; align-items: center; gap: 14px; color: var(--text-strong); }
+.contact-row__ic {
+  width: 46px; height: 46px; flex-shrink: 0;
+  border-radius: var(--radius-md); background: var(--green-50);
+  display: flex; align-items: center; justify-content: center;
+}
+.contact-row__ic .icon { width: 20px; height: 20px; color: var(--green-600); }
+.contact-row__text em {
+  display: block; font-style: normal; font-family: var(--font-display);
+  font-weight: 500; font-size: 12px; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 2px;
+}
+.contact-row__text b { display: block; font-size: 17px; font-weight: 600; color: var(--text-strong); }
+a.contact-row:hover .contact-row__text b { color: var(--green-500); }
 .map-ph {
   border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 1/1;
   background: repeating-linear-gradient(45deg, var(--concrete-200) 0 14px, var(--concrete-100) 14px 28px);
